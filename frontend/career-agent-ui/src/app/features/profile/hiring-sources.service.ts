@@ -1,0 +1,3 @@
+import {Injectable} from '@angular/core';import {HttpClient} from '@angular/common/http';
+export interface HiringSource{id:string;source_url:string;status:string;confidence:string;discovery_method:string;notes?:string}
+@Injectable({providedIn:'root'})export class HiringSourcesService{constructor(private http:HttpClient){}list(companyId:string){return this.http.get<HiringSource[]>(`/api/v1/companies/${companyId}/hiring-sources`)}add(companyId:string,value:any){return this.http.post<HiringSource>(`/api/v1/companies/${companyId}/hiring-sources`,value)}discover(companyId:string){return this.http.post<any>(`/api/v1/companies/${companyId}/hiring-sources/discover`,{sources:[]})}}
