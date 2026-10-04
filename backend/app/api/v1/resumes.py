@@ -7,6 +7,9 @@ from app.repositories import resume_repository as repo
 from app.schemas.resume import ResumeResponse
 from app.services.current_candidate_service import get_current_candidate
 from app.services import resume_service
+from app.services import resume_parser_service
+from app.repositories import resume_version_repository as versions
+from app.schemas.resume_version import ResumeVersionResponse
 router=APIRouter(prefix='/resumes',tags=['Resumes'])
 def c(user,db):return get_current_candidate(db,user['uid'])
 @router.post('',response_model=ResumeResponse)
@@ -23,3 +26,13 @@ def download(resume_id,user:dict=Depends(get_current_user),db:Session=Depends(ge
  return FileResponse(path,media_type=r.mime_type,filename=r.original_filename)
 @router.delete('/{resume_id}',status_code=204)
 def delete_resume(resume_id,user:dict=Depends(get_current_user),db:Session=Depends(get_db)):resume_service.delete(db,c(user,db).id,resume_id)
+@router.post('/{resume_id}/parse',response_model=ResumeVersionResponse)
+def parse(resume_id,user:dict=Depends(get_current_user),db:Session=Depends(get_db)):return resume_parser_service.parse(db,c(user,db).id,resume_service.get(db,c(user,db).id,resume_id))
+@router.get('/{resume_id}/versions',response_model=list[ResumeVersionResponse])
+def list_versions(resume_id,user:dict=Depends(get_current_user),db:Session=Depends(get_db)):
+ r=resume_service.get(db,c(user,db).id,resume_id);return versions.list_versions(db,r.id)
+@router.get('/{resume_id}/parsed',response_model=ResumeVersionResponse)
+def latest(resume_id,user:dict=Depends(get_current_user),db:Session=Depends(get_db)):
+ r=resume_service.get(db,c(user,db).id,resume_id);v=versions.latest(db,r.id)
+ if not v:raise __import__('fastapi').HTTPException(404,'Parsed resume not found')
+ return v

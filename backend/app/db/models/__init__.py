@@ -5,5 +5,6 @@ from app.db.models.experience import Experience, ExperienceAchievement
 from app.db.models.project import Project
 from app.db.models.skill import Skill, SkillAlias, CandidateSkill, SkillEvidence
 from app.db.models.resume import Resume
+from app.db.models.resume_version import ResumeVersion
 
 __all__ = ["Candidate", "CandidateProfile", "Education", "Experience", "ExperienceAchievement", "Project"]
