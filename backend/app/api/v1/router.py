@@ -11,6 +11,7 @@ from app.api.v1.hiring_sources import router as hiring_sources_router
 from app.api.v1.jobs import router as jobs_router
 from app.api.v1.jd_analysis import router as jd_analysis_router
 from app.api.v1.matches import router as matches_router
+from app.api.v1.resume_selection import router as resume_selection_router
 
 api_router = APIRouter(prefix="/api/v1")
 api_router.include_router(candidates_router)
@@ -24,3 +25,4 @@ api_router.include_router(hiring_sources_router)
 api_router.include_router(jobs_router)
 api_router.include_router(jd_analysis_router)
 api_router.include_router(matches_router)
+api_router.include_router(resume_selection_router)

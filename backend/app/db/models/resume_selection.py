@@ -1,0 +1,8 @@
+import uuid
+from datetime import datetime,timezone
+from sqlalchemy import DateTime,ForeignKey,String,Text,UniqueConstraint
+from sqlalchemy.dialects.postgresql import UUID
+from sqlalchemy.orm import Mapped,mapped_column
+from app.db.base import Base
+class ResumeSelection(Base):
+ __tablename__='resume_selections';__table_args__=(UniqueConstraint('candidate_id','job_id',name='uq_resume_selection'),);id:Mapped[uuid.UUID]=mapped_column(UUID(as_uuid=True),primary_key=True,default=uuid.uuid4);candidate_id:Mapped[uuid.UUID]=mapped_column(UUID(as_uuid=True),ForeignKey('candidates.id',ondelete='CASCADE'),nullable=False);job_id:Mapped[uuid.UUID]=mapped_column(UUID(as_uuid=True),ForeignKey('jobs.id',ondelete='CASCADE'),nullable=False);resume_id:Mapped[uuid.UUID]=mapped_column(UUID(as_uuid=True),ForeignKey('resumes.id',ondelete='RESTRICT'),nullable=False);resume_version_id:Mapped[uuid.UUID|None]=mapped_column(UUID(as_uuid=True),ForeignKey('resume_versions.id',ondelete='SET NULL'));role_profile_id:Mapped[uuid.UUID|None]=mapped_column(UUID(as_uuid=True),ForeignKey('role_profiles.id',ondelete='SET NULL'));selection_method:Mapped[str]=mapped_column(String(30),nullable=False);explanation:Mapped[str]=mapped_column(Text,nullable=False);status:Mapped[str]=mapped_column(String(20),nullable=False,default='selected');created_at:Mapped[datetime]=mapped_column(DateTime(timezone=True),default=lambda:datetime.now(timezone.utc),nullable=False);updated_at:Mapped[datetime]=mapped_column(DateTime(timezone=True),default=lambda:datetime.now(timezone.utc),onupdate=lambda:datetime.now(timezone.utc),nullable=False)
