@@ -19,5 +19,6 @@ from app.db.models.tailored_resume import TailoredResume, TailoredResumeClaim
 from app.db.models.application import Application, ApplicationEvent
 from app.db.models.outreach import Contact, JobContact, Outreach, OutreachEvent
 from app.db.models.communication import Integration, EmailThread, EmailMessage, CommunicationEvent
+from app.db.models.analytics import Recommendation
 
 __all__ = ["Candidate", "CandidateProfile", "Education", "Experience", "ExperienceAchievement", "Project"]
