@@ -15,5 +15,6 @@ from app.db.models.job import Job, JobSource, JobLocation
 from app.db.models.job_analysis import JobAnalysis, JobRequirement, JobSkill
 from app.db.models.candidate_job_match import CandidateJobMatch, CandidateJobMatchEvidence
 from app.db.models.resume_selection import ResumeSelection
+from app.db.models.tailored_resume import TailoredResume, TailoredResumeClaim
 
 __all__ = ["Candidate", "CandidateProfile", "Education", "Experience", "ExperienceAchievement", "Project"]
