@@ -7,7 +7,7 @@ class CandidateProfileCreate(BaseModel):
     phone: str | None = Field(default=None, max_length=30)
     location: str | None = Field(default=None, max_length=255)
     headline: str | None = Field(default=None, max_length=255)
-    summary: str | None = None
+    summary: str | None = Field(default=None, max_length=10000)
     years_experience: int | None = Field(default=None, ge=0)
     current_designation: str | None = Field(default=None, max_length=255)
     linkedin_url: HttpUrl | None = None
@@ -27,3 +27,7 @@ class CandidateProfileResponse(BaseModel):
     github_url: str | None
 
     model_config = ConfigDict(from_attributes=True)
+
+
+class CandidateProfileUpdate(CandidateProfileCreate):
+    pass
