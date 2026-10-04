@@ -1,0 +1,3 @@
+import {Injectable} from '@angular/core';import {HttpClient} from '@angular/common/http';
+export interface Resume{id:string;original_filename:string;mime_type:string;file_size:number;status:string;created_at:string}
+@Injectable({providedIn:'root'})export class ResumeService{constructor(private http:HttpClient){}list(){return this.http.get<Resume[]>('/api/v1/resumes')}upload(file:File){const data=new FormData();data.append('file',file);return this.http.post<Resume>('/api/v1/resumes',data)}download(id:string){return this.http.get(`/api/v1/resumes/${id}/download`,{responseType:'blob'})}delete(id:string){return this.http.delete(`/api/v1/resumes/${id}`)}}

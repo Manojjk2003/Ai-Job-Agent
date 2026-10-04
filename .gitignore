@@ -12,6 +12,7 @@ dist/
 .coverage.*
 htmlcov/
 *.egg-info/
+private-storage/
 *.log
 .idea/
 .vscode/
