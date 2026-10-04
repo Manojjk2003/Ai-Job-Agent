@@ -8,6 +8,7 @@ from app.api.v1.role_profiles import router as role_profiles_router
 from app.api.v1.preferences import router as preferences_router
 from app.api.v1.companies import router as companies_router
 from app.api.v1.hiring_sources import router as hiring_sources_router
+from app.api.v1.jobs import router as jobs_router
 
 api_router = APIRouter(prefix="/api/v1")
 api_router.include_router(candidates_router)
@@ -18,3 +19,4 @@ api_router.include_router(role_profiles_router)
 api_router.include_router(preferences_router)
 api_router.include_router(companies_router)
 api_router.include_router(hiring_sources_router)
+api_router.include_router(jobs_router)

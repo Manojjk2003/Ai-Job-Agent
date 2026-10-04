@@ -11,5 +11,6 @@ from app.db.models.role_profile_links import RoleProfileSkill,RoleProfileExperie
 from app.db.models.preference import CandidatePreference,PreferenceLocation
 from app.db.models.company import Company, CompanyLocation, CompanyDiscoveryRun, CompanyDiscoveryRunResult
 from app.db.models.hiring_source import HiringSource, CompanyHiringSource
+from app.db.models.job import Job, JobSource, JobLocation
 
 __all__ = ["Candidate", "CandidateProfile", "Education", "Experience", "ExperienceAchievement", "Project"]
