@@ -1,0 +1,10 @@
+import uuid
+from datetime import datetime,timezone
+from sqlalchemy import DateTime,ForeignKey,String,Text,UniqueConstraint
+from sqlalchemy.dialects.postgresql import UUID
+from sqlalchemy.orm import Mapped,mapped_column
+from app.db.base import Base
+class CandidateJobMatch(Base):
+ __tablename__='candidate_job_matches';__table_args__=(UniqueConstraint('candidate_id','job_id',name='uq_candidate_job_match'),);id:Mapped[uuid.UUID]=mapped_column(UUID(as_uuid=True),primary_key=True,default=uuid.uuid4);candidate_id:Mapped[uuid.UUID]=mapped_column(UUID(as_uuid=True),ForeignKey('candidates.id',ondelete='CASCADE'),nullable=False,index=True);job_id:Mapped[uuid.UUID]=mapped_column(UUID(as_uuid=True),ForeignKey('jobs.id',ondelete='CASCADE'),nullable=False,index=True);role_profile_id:Mapped[uuid.UUID|None]=mapped_column(UUID(as_uuid=True),ForeignKey('role_profiles.id',ondelete='SET NULL'));status:Mapped[str]=mapped_column(String(20),nullable=False);match_version:Mapped[str]=mapped_column(String(30),nullable=False);created_at:Mapped[datetime]=mapped_column(DateTime(timezone=True),default=lambda:datetime.now(timezone.utc),nullable=False);updated_at:Mapped[datetime]=mapped_column(DateTime(timezone=True),default=lambda:datetime.now(timezone.utc),onupdate=lambda:datetime.now(timezone.utc),nullable=False)
+class CandidateJobMatchEvidence(Base):
+ __tablename__='candidate_job_match_evidence';id:Mapped[uuid.UUID]=mapped_column(UUID(as_uuid=True),primary_key=True,default=uuid.uuid4);match_id:Mapped[uuid.UUID]=mapped_column(UUID(as_uuid=True),ForeignKey('candidate_job_matches.id',ondelete='CASCADE'),nullable=False,index=True);job_requirement_id:Mapped[uuid.UUID|None]=mapped_column(UUID(as_uuid=True),ForeignKey('job_requirements.id',ondelete='SET NULL'));candidate_skill_id:Mapped[uuid.UUID|None]=mapped_column(UUID(as_uuid=True),ForeignKey('candidate_skills.id',ondelete='SET NULL'));classification:Mapped[str]=mapped_column(String(30),nullable=False);reason:Mapped[str]=mapped_column(Text,nullable=False);created_at:Mapped[datetime]=mapped_column(DateTime(timezone=True),default=lambda:datetime.now(timezone.utc),nullable=False)
