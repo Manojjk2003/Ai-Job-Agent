@@ -14,6 +14,7 @@ from app.api.v1.matches import router as matches_router
 from app.api.v1.resume_selection import router as resume_selection_router
 from app.api.v1.resume_tailoring import router as resume_tailoring_router
 from app.api.v1.applications import router as applications_router
+from app.api.v1.outreach import router as outreach_router
 
 api_router = APIRouter(prefix="/api/v1")
 api_router.include_router(candidates_router)
@@ -30,3 +31,4 @@ api_router.include_router(matches_router)
 api_router.include_router(resume_selection_router)
 api_router.include_router(resume_tailoring_router)
 api_router.include_router(applications_router)
+api_router.include_router(outreach_router)

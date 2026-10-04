@@ -17,5 +17,6 @@ from app.db.models.candidate_job_match import CandidateJobMatch, CandidateJobMat
 from app.db.models.resume_selection import ResumeSelection
 from app.db.models.tailored_resume import TailoredResume, TailoredResumeClaim
 from app.db.models.application import Application, ApplicationEvent
+from app.db.models.outreach import Contact, JobContact, Outreach, OutreachEvent
 
 __all__ = ["Candidate", "CandidateProfile", "Education", "Experience", "ExperienceAchievement", "Project"]
