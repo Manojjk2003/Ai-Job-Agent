@@ -6,6 +6,7 @@ from app.db.session import get_db
 from app.db.models.job import Job,JobSource,JobLocation
 from app.schemas.job import JobWrite,JobResponse,JobDiscoveryRequest
 from app.services import job_discovery_service as service
+from app.services import job_normalization_service as normalization
 router=APIRouter(prefix='/jobs',tags=['Jobs'])
 @router.post('',response_model=JobResponse)
 def add(item:JobWrite,user:dict=Depends(get_current_user),db:Session=Depends(get_db)):return service.add(db,item)
@@ -22,3 +23,5 @@ def get(job_id:uuid.UUID,user:dict=Depends(get_current_user),db:Session=Depends(
 def sources(job_id:uuid.UUID,user:dict=Depends(get_current_user),db:Session=Depends(get_db)):return db.query(JobSource).filter(JobSource.job_id==job_id).all()
 @router.get('/{job_id}/locations')
 def locations(job_id:uuid.UUID,user:dict=Depends(get_current_user),db:Session=Depends(get_db)):return db.query(JobLocation).filter(JobLocation.job_id==job_id).all()
+@router.post('/sources/{source_id}/normalize',response_model=JobResponse)
+def normalize(source_id:uuid.UUID,user:dict=Depends(get_current_user),db:Session=Depends(get_db)):return normalization.normalize_source(db,source_id)
