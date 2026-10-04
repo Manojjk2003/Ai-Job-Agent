@@ -12,5 +12,6 @@ from app.db.models.preference import CandidatePreference,PreferenceLocation
 from app.db.models.company import Company, CompanyLocation, CompanyDiscoveryRun, CompanyDiscoveryRunResult
 from app.db.models.hiring_source import HiringSource, CompanyHiringSource
 from app.db.models.job import Job, JobSource, JobLocation
+from app.db.models.job_analysis import JobAnalysis, JobRequirement, JobSkill
 
 __all__ = ["Candidate", "CandidateProfile", "Education", "Experience", "ExperienceAchievement", "Project"]
