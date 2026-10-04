@@ -1,5 +1,6 @@
 import uuid
 from fastapi import APIRouter,Depends
+from fastapi.responses import FileResponse
 from pydantic import BaseModel,Field
 from sqlalchemy.orm import Session
 from app.core.security import get_current_user
@@ -16,3 +17,6 @@ def get(job_id:uuid.UUID,user:dict=Depends(get_current_user),db:Session=Depends(
 def approve(job_id:uuid.UUID,user:dict=Depends(get_current_user),db:Session=Depends(get_db)):return service.approve(db,get_current_candidate(db,user['uid']).id,job_id)
 @router.post('/{job_id}/resume-tailoring/reject')
 def reject(job_id:uuid.UUID,p:Reject,user:dict=Depends(get_current_user),db:Session=Depends(get_db)):return service.reject(db,get_current_candidate(db,user['uid']).id,job_id,p.reason)
+@router.get('/{job_id}/resume-tailoring/download')
+def download(job_id:uuid.UUID,user:dict=Depends(get_current_user),db:Session=Depends(get_db)):
+ return FileResponse(service.document(db,get_current_candidate(db,user['uid']).id,job_id),media_type='application/vnd.openxmlformats-officedocument.wordprocessingml.document',filename='tailored-resume.docx')
