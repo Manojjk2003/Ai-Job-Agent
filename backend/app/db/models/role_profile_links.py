@@ -1,0 +1,12 @@
+import uuid
+from datetime import datetime,timezone
+from sqlalchemy import Boolean,DateTime,ForeignKey,Integer,UniqueConstraint
+from sqlalchemy.dialects.postgresql import UUID
+from sqlalchemy.orm import Mapped,mapped_column
+from app.db.base import Base
+class RoleProfileSkill(Base):
+ __tablename__='role_profile_skills';__table_args__=(UniqueConstraint('role_profile_id','candidate_skill_id',name='uq_role_profile_skill'),);id:Mapped[uuid.UUID]=mapped_column(UUID(as_uuid=True),primary_key=True,default=uuid.uuid4);role_profile_id:Mapped[uuid.UUID]=mapped_column(UUID(as_uuid=True),ForeignKey('role_profiles.id',ondelete='CASCADE'),nullable=False);candidate_skill_id:Mapped[uuid.UUID]=mapped_column(UUID(as_uuid=True),ForeignKey('candidate_skills.id',ondelete='CASCADE'),nullable=False);priority:Mapped[int]=mapped_column(Integer,nullable=False);is_primary:Mapped[bool]=mapped_column(Boolean,default=False,nullable=False);created_at:Mapped[datetime]=mapped_column(DateTime(timezone=True),default=lambda:datetime.now(timezone.utc))
+class RoleProfileExperience(Base):
+ __tablename__='role_profile_experiences';__table_args__=(UniqueConstraint('role_profile_id','experience_id',name='uq_role_profile_experience'),);id:Mapped[uuid.UUID]=mapped_column(UUID(as_uuid=True),primary_key=True,default=uuid.uuid4);role_profile_id:Mapped[uuid.UUID]=mapped_column(UUID(as_uuid=True),ForeignKey('role_profiles.id',ondelete='CASCADE'),nullable=False);experience_id:Mapped[uuid.UUID]=mapped_column(UUID(as_uuid=True),ForeignKey('experiences.id',ondelete='CASCADE'),nullable=False);priority:Mapped[int]=mapped_column(Integer,nullable=False);is_primary:Mapped[bool]=mapped_column(Boolean,default=False,nullable=False);created_at:Mapped[datetime]=mapped_column(DateTime(timezone=True),default=lambda:datetime.now(timezone.utc))
+class RoleProfileProject(Base):
+ __tablename__='role_profile_projects';__table_args__=(UniqueConstraint('role_profile_id','project_id',name='uq_role_profile_project'),);id:Mapped[uuid.UUID]=mapped_column(UUID(as_uuid=True),primary_key=True,default=uuid.uuid4);role_profile_id:Mapped[uuid.UUID]=mapped_column(UUID(as_uuid=True),ForeignKey('role_profiles.id',ondelete='CASCADE'),nullable=False);project_id:Mapped[uuid.UUID]=mapped_column(UUID(as_uuid=True),ForeignKey('projects.id',ondelete='CASCADE'),nullable=False);priority:Mapped[int]=mapped_column(Integer,nullable=False);is_primary:Mapped[bool]=mapped_column(Boolean,default=False,nullable=False);created_at:Mapped[datetime]=mapped_column(DateTime(timezone=True),default=lambda:datetime.now(timezone.utc))

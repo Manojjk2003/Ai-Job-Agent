@@ -1,0 +1,3 @@
+import {Injectable} from '@angular/core';import {HttpClient} from '@angular/common/http';
+export interface RoleProfile{id:string;name:string;target_designation:string;headline?:string;summary?:string;target_seniority?:string;is_default:boolean;is_active:boolean}
+@Injectable({providedIn:'root'})export class RoleProfilesService{constructor(private http:HttpClient){}list(){return this.http.get<RoleProfile[]>('/api/v1/role-profiles')}create(v:any){return this.http.post<RoleProfile>('/api/v1/role-profiles',v)}archive(id:string){return this.http.post(`/api/v1/role-profiles/${id}/archive`,{})}setDefault(id:string){return this.http.post(`/api/v1/role-profiles/${id}/set-default`,{})}}
